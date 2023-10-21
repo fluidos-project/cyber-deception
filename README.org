@@ -1,0 +1,22 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+options: email:nil f:t inline:t num:nil p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:t todo:t |:t
+#+title: WP5 - Cyber Deception
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.1 (Org mode 9.5.4)
+#+cite_export:
+
+This repository aims at collecting tools and documentation to provide Cyber Deception [[[https://ieeexplore.ieee.org/document/8328971][1]],[[https://medium.com/dataseries/what-really-is-cyber-deception-e60dd33e9e41][2]]] service in *FLUIDOS*.
+
+The Cyber Deception service currently relies on the features offered by the *Decepto* tool, which is a system that creates decoys as clones of existing services.
+
+Given an application graph (sets of micro-services and data-flows across them) Decepto decides the services to clone as decoys and where to deploy them based on optimization metrics such as the availability of resources.
+
+As shown in the below picture it runs in a Kubernetes cluster and could use multiple external algorithms to take decisions and perform actions.
+
+[[file:decepto-10k-foot-view.png]]
+
+Decepto is being defined with a fully open approach, which facilitates the participation of actors that are outside the FLUIDOS community. Current implementation is available at [[https://gitlab.fbk.eu/cyber-deception/decepto]].
