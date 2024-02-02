@@ -11,6 +11,21 @@
 
 This repository aims at collecting tools and documentation to provide Cyber Deception [[[https://ieeexplore.ieee.org/document/8328971][1]],[[https://medium.com/dataseries/what-really-is-cyber-deception-e60dd33e9e41][2]]] service in *FLUIDOS*.
 
+The Cyber Deception feature, part of the FLUIDOS Cyber Security services designed to improve the overall security of the ecosystem, is willing to provide Cloud Native Cyber Deception as a Service (CDaaS) integrated into the FLUIDOS continuum.
+
+
+A description of a first use-case follow:
+
+"By leveraging FLUIODS, the owner of a local domain will see a continuum across local and remotes resources. Thanks to CDaaS he will also get additional advantages from a given remote domain which offers those security capabilities, so as to take benefit of it and protect the workload running on the FLUIDOS continuum.
+
+At some point a cloud-native application distributed across the two domains is transparently protected by decoys running in the remote cluster, which are created out of the original application components in order to intercept a possible malicious attack."
+
+
+The research and development activities currently targets the following KPIs:
+- Improved integration of Cyber Deception with FLUIDOS and delivery as a service
+- Additional monitoring functionalities and extensions to attack tracing and threat intelligence capabilities
+
+
 The Cyber Deception service currently relies on the features offered by the *Decepto* tool, which is a system that creates decoys as clones of existing services.
 
 Given an application graph (sets of micro-services and data-flows across them) Decepto decides the services to clone as decoys and where to deploy them based on optimization metrics such as the availability of resources.
