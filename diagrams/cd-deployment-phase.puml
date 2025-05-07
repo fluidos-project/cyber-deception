@@ -1,0 +1,25 @@
+' Copyright 2023 Fondazione Bruno Kessler.
+
+' Licensed under the Apache License, Version 2.0 (the "License");
+' you may not use this file except in compliance with the License.
+' You may obtain a copy of the License at
+
+'     http://www.apache.org/licenses/LICENSE-2.0
+
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS,
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+' See the License for the specific language governing permissions and
+' limitations under the License.
+
+@startuml
+User -> User: Write an Intent for Online Boutique application (8 microservices)
+User -> Bastion: Install the Online Boutiquer Intent (honey-net policy)
+Bastion -> Bastion: Find a FLUIDOS Node supporting the CD capability
+Bastion -> Bastion: Derive k8s resources (Deployements, Services) from the Online Boutique Intent
+Bastion -> fnode as "FLUIDOS-Node": Install the k8s resources for Online Boutique application
+Bastion -> Bastion: Derive AppGraph CRD from the Online Boutique Intent
+Bastion -> fnode as "FLUIDOS-Node": Install the AppGraph resource to activate CD on Online Boutique application
+Decepto -> fnode as "FLUIDOS-Node": Read the AppGraph and activate the CD on the Online Boutique application
+Decepto -> fnode as "FLUIDOS-Node": Create decoys by cloning some microservices
+@enduml
