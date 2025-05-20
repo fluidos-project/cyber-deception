@@ -3,5 +3,5 @@ spec:
     typeData:
       properties:
         additionalProperties:
-          bandwidth:
-            AZURE: 100ms
+          security_features:
+            cyber-deception: true
