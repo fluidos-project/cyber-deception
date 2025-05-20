@@ -22,8 +22,5 @@ spec:
   - isdecoy: false
     name: "a1m3"
     securityscore: "0.5"
-  # - isdecoy: true
-  #   name: "a1m1dc"
-  #   securityscore: "0.5"
 status:
   currentstatus: 1
