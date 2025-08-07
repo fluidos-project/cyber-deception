@@ -1,0 +1,5 @@
+apiVersion: v2
+name: a1-chart
+description: A Helm chart for deploying a1m1, a1m2, a1m3 pods and services
+version: 0.1.0
+appVersion: "1.0"

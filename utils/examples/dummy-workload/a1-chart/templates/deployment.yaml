@@ -1,0 +1,48 @@
+{{- range .Values.apps }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+        appgraph: a1
+    spec:
+      containers:
+        - name: {{ .containerName }}
+          image: {{ .image }}
+          command:
+            - "/bin/sh"
+            - "-ecx"
+            - |
+              echo "I am pod: $MY_POD_NAME runing on node: $MY_NODE_NAME" | tee index.html
+              python -m http.server {{ .port }} 2>&1
+          env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: {{ .port }}
+          {{- if .enableProbes }}
+          readinessProbe:
+            httpGet:
+              port: {{ .port }}
+          livenessProbe:
+            httpGet:
+              port: {{ .port }}
+          {{- end }}
+---
+{{- end }}

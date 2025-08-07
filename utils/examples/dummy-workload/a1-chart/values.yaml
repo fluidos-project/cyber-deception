@@ -1,0 +1,16 @@
+apps:
+  - name: a1m1
+    image: dsantoro/ubuntu
+    containerName: ubuntu
+    port: 8000
+    enableProbes: false
+  - name: a1m2
+    image: dsantoro/ubuntu
+    containerName: ubuntu
+    port: 8000
+    enableProbes: false
+  - name: a1m3
+    image: dsantoro/ubuntu
+    containerName: ubuntu
+    port: 8000
+    enableProbes: true

@@ -1,0 +1,12 @@
+* Helm chart instructions
+
+Install the workload via Helm
+#+begin_src sh
+helm install my-a1 ./a1-chart
+#+end_src
+
+
+Install the workload via Helm by overriding values, if needed
+#+begin_src sh
+helm install my-a1 ./a1-chart -f my-values.yaml
+#+end_src
