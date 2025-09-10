@@ -89,7 +89,7 @@ helm upgrade --install --devel -n fluidos --create-namespace node fluidos/node \
 kubectl apply -f $PWD/example-mbmo-config-map.yaml --kubeconfig $PWD/consumer-config.yaml -n fluidos
 
 # add CRDs required
-kubectl apply --kubeconfig $PWD/consumer-config.yaml -f $PWD/../../deployment/fluidos-meta-orchestrator/crds
+kubectl apply --kubeconfig $PWD/consumer-config.yaml -f $PWD/crds
 
 # Wait until at least one flavor resource is present
 until kubectl get flavor -n fluidos --no-headers --kubeconfig $PWD/provider-IT-config.yaml | grep -q .; do
