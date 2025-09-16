@@ -57,7 +57,7 @@ There are two main phases to enable the Cyber Deception security feature in FLUI
   - Example:
     #+begin_src yaml
     annotations:
-      fluidos-intent-<feature-name>: "true"
+      fluidos-intent-cyber-deception: "true"
     #+end_src
   - Optional configuration parameters can be passed and validated using the related validation function.
   - Example intent manifest: [[https://github.com/fluidos-project/fluidos-modelbased-metaorchestrator/blob/demo-Y2-stable/utils/testbed/intent-demo.yaml][Intent Example]]
