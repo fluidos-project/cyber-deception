@@ -68,6 +68,9 @@ helm upgrade --install --devel -n fluidos --create-namespace node fluidos/node \
   --wait \
   --kubeconfig $PWD/provider-IT-config.yaml
 
+# advertise cyber deception service in the provider Italy
+kubectl get flavor -n fluidos --no-headers --kubeconfig $PWD/provider-IT-config.yaml | cut -f1 -d\  | xargs -I% kubectl patch flavor/%  --patch-file $PWD/../utils/flavor-patch.yaml --type merge -n fluidos --kubeconfig $PWD/provider-IT-config.yaml
+
 # setup consumer
 kind create cluster --name consumer --config $PWD/consumer-cluster-config.yaml --kubeconfig $PWD/consumer-config.yaml
 
