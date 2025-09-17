@@ -31,7 +31,7 @@ kind create cluster --name provider-germany --config $PWD/provider-cluster-confi
 
 DE_PROVIDER_CONTROLPLANE_IP=$($COMMAND inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' provider-germany-control-plane)
 
-liqoctl install kind --kubeconfig $PWD/provider-DE-config.yaml
+liqoctl install kind --kubeconfig $PWD/provider-DE-config.yaml --cluster-id germany
 
 helm upgrade --install --devel -n fluidos --create-namespace node fluidos/node \
   --set "provider=kind" \
@@ -56,7 +56,7 @@ kind create cluster --name provider-italy --config $PWD/provider-cluster-config.
 
 IT_PROVIDER_CONTROLPLANE_IP=$($COMMAND inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' provider-italy-control-plane)
 
-liqoctl install kind --kubeconfig $PWD/provider-IT-config.yaml
+liqoctl install kind --kubeconfig $PWD/provider-IT-config.yaml --cluster-id italy
 
 helm upgrade --install --devel -n fluidos --create-namespace node fluidos/node \
   --set "provider=kind" \
@@ -126,3 +126,17 @@ spec:
   # Set ip:port with the provider cluster control plane
   address: ${IT_PROVIDER_CONTROLPLANE_IP}:${PROVIDER_NODE_PORT}
 EOF
+
+# Ask user if they want to skip cluster peering and offloading
+read -t 10 -p "Do you want to skip cluster peering and namespace offloading? (y/N): " SKIP_PEERING
+
+if [[ "${SKIP_PEERING,,}" == "y" ]]; then
+  echo "Skipping cluster peering and namespace offloading."
+else
+  echo "Proceeding with cluster peering and namespace offloading..."
+
+  liqoctl peer --remote-kubeconfig provider-DE-config.yaml --gw-server-service-type NodePort --kubeconfig consumer-config.yaml
+  liqoctl peer --remote-kubeconfig provider-IT-config.yaml --gw-server-service-type NodePort --kubeconfig consumer-config.yaml
+  kubectl create namespace demo --kubeconfig consumer-config.yaml
+  liqoctl offload namespace demo --kubeconfig consumer-config.yaml
+fi
