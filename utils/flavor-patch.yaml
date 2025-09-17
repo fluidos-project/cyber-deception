@@ -1,0 +1,7 @@
+spec:
+  flavorType:
+    typeData:
+      properties:
+        additionalProperties:
+          security_features:
+            cyber-deception: true

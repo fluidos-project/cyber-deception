@@ -1,0 +1,26 @@
+apiVersion: decepto.fbk.eu/v1alpha1
+kind: AppGraph
+metadata:
+  name: "a1"
+  finalizers:
+  - finalizer.decepto.fbk.eu
+spec:
+  dataflows:
+  - destinationid: "a1m2"
+    name: "m1m2"
+    sourceid: "a1m1"
+  - destinationid: "a1m3"
+    name: "m2m3"
+    sourceid: "a1m2"
+  microservices:
+  - isdecoy: false
+    name: "a1m1"
+    securityscore: "0.5"
+  - isdecoy: false
+    name: "a1m2"
+    securityscore: "0.5"
+  - isdecoy: false
+    name: "a1m3"
+    securityscore: "0.5"
+status:
+  currentstatus: 1

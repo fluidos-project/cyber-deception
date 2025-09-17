@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<ITResourceOrchestration id="omspl_43a2ce61f85c4c4faf0acc30a84516a9"
+	xmlns="http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://modeliosoft/xsddesigner/a22bd60b-ee3d-425c-8618-beb6a854051a/ITResource.xsd scheme\mspl.xsd"
+    sliceID="1548"
+    tenantID="1">
+   <ITResource id="mspl_eef61525d1594412bdcef34a4bfb7fc2" orchestrationID="omspl_43a2ce61f85c4c4faf0acc30a84516a9" tenantID="1">
+    <configuration xsi:type="RuleSetConfiguration">
+        <capability>
+           <Name>Service_MANO</Name>
+        </capability>
+        <configurationRule>
+            <configurationRuleAction xsi:type="ServiceAction">
+              <ServiceActionType>DEPLOY</ServiceActionType>
+               <securedService>
+                <service id="132">
+                    <name>shipping</name>
+                    <type>HTTP_SERVER</type>
+                </service>
+               <securityPolicies>
+                <msplID>mspl_9f1a88b4fc67421b98de270d5a63d35a</msplID>
+                </securityPolicies>
+             </securedService>
+           </configurationRuleAction>
+                 <configurationCondition>
+                   <isCNF>false</isCNF>
+               </configurationCondition>
+               <Name>Rule0</Name>
+               <isCNF>false</isCNF>
+           </configurationRule>
+           <Name>Conf0</Name>
+       </configuration>
+   </ITResource>
+  <ITResource id="mspl_9f1a88b4fc67421b98de270d5a63d35a" orchestrationID="omspl_43a2ce61f85c4c4faf0acc30a84516a9" tenantID="1" sliceID="1548">
+    <configuration xsi:type='RuleSetConfiguration'>
+        <capability>
+            <Name>CyberDecepto</Name>
+        </capability>
+        <configurationRule>
+            <configurationRuleAction xsi:type='HoneyNetAction'>
+              <HoneyNetActionType>DEPLOY</HoneyNetActionType>
+                <HoneyNet>
+                  <name>Shipping Graph</name>
+                  <datapath id="1">
+                    <name>frontendshippingservice</name>
+                    <source>frontend</source>
+                    <destination>shipping</destination>
+                  </datapath>
+                  <HoneyPot id="1">
+                    <name>shippingservice</name>
+                    <interaction_level>MEDIUM</interaction_level>
+                    <decoy>false</decoy>
+                  </HoneyPot>
+                </HoneyNet>
+            </configurationRuleAction>
+            <configurationCondition>
+                <isCNF>false</isCNF>
+            </configurationCondition>
+            <externalData xsi:type='Priority'>
+                <value>0</value>
+            </externalData>
+            <Name>Rule0</Name>
+            <isCNF>false</isCNF>
+        </configurationRule>
+        <resolutionStrategy xsi:type='FMR'/>
+        <Name>Conf0</Name>
+    </configuration>
+    <priority>3000</priority>
+  </ITResource>
+</ITResourceOrchestration>

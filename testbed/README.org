@@ -1,0 +1,49 @@
+* Testbed
+
+This testbed simulates a multi-region FLUIDOS deployment. It consists of three FLUIDOS nodes (k8s cluster) simulating a provider and two consumers and composed by two k8s nodes each:
+
+- =consumer-control-plane=
+- =consumer-worker=
+- =provider-italy-control-plane=
+- =provider-italy-worker=
+- =provider-germany-control-plane=
+- =provider-germany-worker=
+
+The setup is intended for testing the creation of a bigger (10k+ nodes) infrastructure of FLUIDOS-based federation and multi-cluster orchestration.
+
+* Install requirements
+
+Ensure the following tools are installed on your system:
+
+- =kubectl= (Client Version: v1.32.2)
+- =liqoctl= (Client version: v1.0.0)
+
+You can install the requirements using the following links:
+
+- kubectl: https://kubernetes.io/docs/tasks/tools/
+- liqoctl: https://docs.liqo.io/getting-started/installation/
+
+* Setup testbed
+
+To set up the testbed environment, execute the `setup-testbed.sh` script:
+
+#+begin_src bash
+./setup-testbed.sh
+#+end_src
+
+This script will:
+
+- Create three FLUIDOS nodes using KinD
+- Install Liqo and FLUIDOS components on every nodes
+- Configure the control planes for the consumer and providers
+- Establish interconnections and peering between regions using Liqo
+
+After completion, you will have a simulated multi-region FLUIDOS testbed ready for experimentation.
+
+* Teardown testbed
+
+To remove the testbed and clean up all associated resources, run:
+
+#+begin_src bash
+./teardown.sh
+#+end_src
