@@ -48,7 +48,7 @@ There are two main phases to enable the Cyber Deception security feature in FLUI
 
 - Each provider node must include the proper =FLAVOR= Custom Resource Definition (CRD)
 - The patch in order to enable cyber-deception is available under =./utils/flavor-patch.yaml=
-- Upon advertising the Cyber Deception feature, [[https://decepto.readthedocs.io/en/latest/installation/install.html][install Decepto]] on the node.
+- Upon advertising the Cyber Deception feature, by applying the above patch, [[https://decepto.readthedocs.io/en/latest/installation/install.html][install Decepto]] on a target node to benefits from its security features.
 
 ** Activation of the Security feature
 
@@ -65,3 +65,88 @@ There are two main phases to enable the Cyber Deception security feature in FLUI
 - If using the *Bastion Orchestrator*:
   - Express the requirement by defining the appropriate policy using the Medium-Level Security Policy Language (MSPL).
   - Further reading: [[https://www.sciencedirect.com/science/article/pii/S1389128625003196][MSPL Reference Article]]
+
+* Getting Started: All-in-One Testbed
+
+To quickly experiment with Cyber Deception in FLUIDOS, an all-in-one testbed is provided in the =testbed/= directory. This testbed automates the setup of multiple FLUIDOS clusters (providers and consumer), configures the required resources, and demonstrates the Cyber Deception advertisement and activation phases described above.
+
+Note: The testbed does not currently include the installation and setup of Decepto which must be performed manually on the provider clusters after the setup script completes by following [[https://decepto.readthedocs.io/en/latest/installation/install.html][this guide]].
+
+** Prerequisites
+
+- Docker or Podman
+- Kind (Kubernetes in Docker)
+- Helm
+- Kubectl
+- Liqoctl
+
+** Quick Start
+
+1. Move to your project folder, clone this repository and navigate to the =cyber-deception/testbed= directory:
+
+   #+begin_src shell
+   cd cyber-deception/testbed
+   #+end_src
+
+2. Run the setup script:
+
+   #+begin_src shell
+   ./setup-testbed.sh
+   #+end_src
+
+   The script will:
+   - Create provider and consumer clusters using Kind
+   - Install FLUIDOS components and required CRDs
+   - Patch flavors to advertise Cyber Deception capabilities
+   - Optionally peer clusters and offload namespaces (you will be prompted)
+
+3. Follow the on-screen instructions. The script will prompt you to skip or proceed with cluster peering and namespace offloading.
+
+** Add one Orchestrator
+
+In a separate terminal, move back to your project folder and set up an orchestrator (for example, the Meta-Orchestrator):
+
+1. Clone the Meta-Orchestrator repository:
+   #+begin_src shell
+   git clone https://github.com/fluidos-project/fluidos-modelbased-metaorchestrator
+   cd fluidos-modelbased-metaorchestrator
+   #+end_src
+
+2. (Recommended) Create and activate a dedicated Python virtual environment:
+   #+begin_src shell
+   python3 -m venv meta
+   source meta/bin/activate
+   #+end_src
+
+3. Install the FLUIDOS package in editable mode:
+   #+begin_src shell
+   pip install -e .
+   #+end_src
+
+4. Start the FLUIDOS operator, pointing to the consumer cluster:
+   #+begin_src shell
+   KUBECONFIG="$PWD/../cyber-deception/testbed/consumer-config.yaml" kopf run --verbose -m fluidos_model_orchestrator
+   #+end_src
+
+** Test cyber-deception intent
+
+1. Return to the =cyber-deception/testbed= folder:
+   #+begin_src shell
+   cd ../cyber-deception/testbed
+   #+end_src
+
+2. Apply the example intent manifests (Pod and Deployment) in the =demo= namespace of the consumer cluster:
+   #+begin_src shell
+   kubectl apply -f ../utils/metaorchestrator/www-example-pod.yaml -n demo --kubeconfig consumer-config.yaml
+   kubectl apply -f ../utils/metaorchestrator/www-example-deployment.yaml -n demo --kubeconfig consumer-config.yaml
+   #+end_src
+
+3. Check the status of the deployed pods in the consumer cluster:
+   #+begin_src shell
+   kubectl get pod -n demo --kubeconfig consumer-config.yaml
+   #+end_src
+
+4. Check the status of the offloaded pods in the provider cluster (Italy):
+   #+begin_src shell
+   kubectl get pod -n $(kubectl get ns --kubeconfig provider-IT-config.yaml -o jsonpath='{.items[*].metadata.name}' | tr ' ' '\n' | grep '^demo') --kubeconfig provider-IT-config.yaml
+   #+end_src
