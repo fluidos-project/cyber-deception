@@ -6,7 +6,7 @@ data:
   UPDATE_FLAVORS: "False"
   UPDATE_FLAVORS_INTERVAL: "360"
   ELECTRICITY_MAP_API_KEY: "TEST_KEY_123!"
-  architecture: "arm64"
+  architecture: "amd64"
   MSPL_ENDPOINT: "http://localhost:8080"
   monitor_enabled: "True"
   monitor_interval: "2"
